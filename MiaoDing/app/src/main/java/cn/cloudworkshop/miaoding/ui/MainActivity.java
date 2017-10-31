@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -77,6 +78,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        startActivity(new Intent(this, MeasureFormActivity.class));
 
         initView();
         checkUpdate();
@@ -263,74 +265,6 @@ public class MainActivity extends BaseActivity {
         fragmentList.add(MyCenterFragment.newInstance());
         fragmentUtils = new FragmentTabUtils(getSupportFragmentManager(),
                 fragmentList, R.id.main_fragment_container, mRgs);
-
-
-//        Map<String, File> map = new HashMap<>();
-//        map.put("camera0.jpg", new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-//                "/CloudWorkshop/camera0.jpg"));
-//        map.put("camera1.jpg", new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-//                "/CloudWorkshop/camera1.jpg"));
-//        map.put("camera2.jpg", new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-//                "/CloudWorkshop/camera2.jpg"));
-//        map.put("camera3.jpg", new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-//                "/CloudWorkshop/camera3.jpg"));
-//        OkHttpUtils.post()
-//                .url(Constant.NEW_TAKE_PHOTO)
-//                .files("img_arr",map)
-//                .addParams("token", SharedPreferencesUtils.getString(this, "token"))
-//                .addParams("scale", "4,3,2,1")
-//                .addParams("y_position", "1,2,3,4")
-//                .addParams("height", "171")
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int id) {
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String response, int id) {
-//                        LogUtils.log(response);
-//                    }
-//                });
-
-
-//        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-//
-//        builder.addFormDataPart("img_arr", "camera0.jpg", RequestBody.create(MediaType.parse("image/jpeg"),
-//                new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/CloudWorkshop/camera0.jpg")));
-//        builder.addFormDataPart("img_arr", "camera1.jpg", RequestBody.create(MediaType.parse("image/jpeg"),
-//                new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/CloudWorkshop/camera1.jpg")));
-//        builder.addFormDataPart("img_arr", "camera2.jpg", RequestBody.create(MediaType.parse("image/jpeg"),
-//                new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/CloudWorkshop/camera2.jpg")));
-//        builder.addFormDataPart("img_arr", "camera3.jpg", RequestBody.create(MediaType.parse("image/jpeg"),
-//                new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/CloudWorkshop/camera3.jpg")));
-//        builder.addFormDataPart("scale", "4,3,2,1");
-//        builder.addFormDataPart("y_position", "1,2,3,4");
-//        builder.addFormDataPart("height", "171");
-//        builder.addFormDataPart("token", SharedPreferencesUtils.getString(this, "token"));
-//
-//        RequestBody requestBody = builder.build();
-//
-//        //构建请求
-//        Request request = new Request.Builder()
-//                .url(Constant.NEW_TAKE_PHOTO)
-//                .post(requestBody)
-//                .build();
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//
-//                LogUtils.log(response.body().string());
-//            }
-//        });
 
 
     }
