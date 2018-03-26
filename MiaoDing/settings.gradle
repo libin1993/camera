@@ -1,1 +1,0 @@
-include ':app', ':sectionrecyclerview', ':photopicker', ':slidingtablayout', 'wheelpicker', ':wheelpicker', ':opencv'
