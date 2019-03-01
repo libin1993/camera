@@ -7,9 +7,9 @@ package cn.cloudworkshop.miaoding.constant;
  */
 
 public class Constant {
-//    public static final String HOST = "http://www.cloudworkshop.cn";
+    public static final String HOST = "http://www.cloudworkshop.cn";
     //测试
-    public static final String HOST = "http://test.cloudworkshop.cn";
+//    public static final String HOST = "http://test.cloudworkshop.cn";
     //oss图片
     public static final String IMG_HOST = "http://source.cloudworkshop.cn";
     //微信appid

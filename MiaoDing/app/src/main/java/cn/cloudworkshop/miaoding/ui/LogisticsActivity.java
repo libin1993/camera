@@ -38,16 +38,17 @@ public class LogisticsActivity extends BaseActivity {
     ImageView imgHeaderBack;
     @BindView(R.id.tv_header_title)
     TextView tvHeaderTitle;
-    @BindView(R.id.tv_logistics_num)
-    TextView tvNumber;
-    @BindView(R.id.tv_logistics_company)
-    TextView tvCompany;
+
     @BindView(R.id.rv_logistics)
     RecyclerView rvLogistics;
     @BindView(R.id.img_goods_thumb)
     ImageView imgGoods;
     @BindView(R.id.img_load_error)
     ImageView imgLoadError;
+    @BindView(R.id.tv_logistics_number)
+    TextView tvNumber;
+    @BindView(R.id.tv_company_logistics)
+    TextView tvCompany;
 
     //快递单号
     private String number;

@@ -9,14 +9,18 @@ import android.widget.Toast;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfDouble;
+import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.objdetect.HOGDescriptor;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -25,11 +29,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Author：binge on 2017/1/11 17:37
  * Email：1993911441@qq.com
- * Describe：检测矩形工具类
+ * Describe：检测A4纸
  */
 public class DetectRectangles {
 
@@ -46,9 +51,9 @@ public class DetectRectangles {
         Mat mRgba = new Mat();
         //读取照片，转传成mat
         Utils.bitmapToMat(bitmap, mRgba);
-        //截取上半部分
-//        Mat roiMat = mRgba.submat(new Rect(0, 0, mRgba.cols(), mRgba.rows() / 2));
-        Mat roiMat = mRgba.submat(new Rect(0, 0, mRgba.cols(), mRgba.rows()));
+        //截取上半部分,检测A4纸
+        Mat roiMat = mRgba.submat(new Rect(0, 0, mRgba.cols(), mRgba.rows() / 2));
+//        Mat roiMat = mRgba.submat(new Rect(0, 0, mRgba.cols(), mRgba.rows()));
         bitmap.recycle();
         //建立灰度图像存储空间
         Mat gray = new Mat(roiMat.size(), CvType.CV_8U);
@@ -57,7 +62,8 @@ public class DetectRectangles {
         //滤波
         Imgproc.blur(gray, gray, new Size(3, 3));
         //图像二值化
-        Imgproc.adaptiveThreshold(gray, gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, blockSize, delta);
+        Imgproc.adaptiveThreshold(gray, gray, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C,
+                Imgproc.THRESH_BINARY, blockSize, delta);
 
         List<MatOfPoint> contours = new ArrayList<>();
         //寻找所有轮廓

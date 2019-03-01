@@ -30,6 +30,17 @@ import org.json.JSONObject;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfDouble;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.objdetect.HOGDescriptor;
 
 import java.io.File;
 import java.io.IOException;
@@ -157,6 +168,40 @@ public class CameraActivity extends BaseActivity implements SensorEventListener 
         loadingView.setIndicatorColor(Color.GRAY);
 
 
+
+
+    }
+
+
+
+    private void init() {
+
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                "/CloudWorkshop/people.png"; // 要检测的图片的路径
+        Mat img = Imgcodecs.imread(path); // 读取图片
+
+        HOGDescriptor hogDescriptor = new HOGDescriptor();
+        hogDescriptor.setSVMDetector(HOGDescriptor.getDefaultPeopleDetector());
+        MatOfRect matOfRect = new MatOfRect();
+        MatOfDouble matOfDouble = new MatOfDouble();
+        hogDescriptor.detectMultiScale(img, matOfRect, matOfDouble, 0, new Size(
+                4, 4), new Size(8, 8), 1.05, 2, false);
+        if (matOfRect.toArray().length > 0) { // 判断是否检测到目标对象，如果有就画矩形，没有就执行下一步
+            for (Rect r : matOfRect.toArray()) { // 检测到的目标转成数组形式，方便遍历
+                r.x += Math.round(r.width * 0.1);
+                r.width = (int) Math.round(r.width * 0.8);
+                r.y += Math.round(r.height * 0.045);
+                r.height = (int) Math.round(r.height * 0.85);
+                Imgproc.rectangle(img, r.tl(), r.br(), new Scalar(0, 0, 255), 2); // 画出矩形
+            }
+            LogUtils.log("矩形绘制完毕！正在输出...");
+        } else {
+            LogUtils.log("未检测到目标！绘制矩形失败！输出原文件！");
+        }
+
+        Imgcodecs.imwrite(Environment.getExternalStorageDirectory().getAbsolutePath() +
+                "/CloudWorkshop/people1.png", img); // 将已经完成检测的Mat对象写出，参数：输出路径，检测完毕的Mat对象。
+        LogUtils.log("输出完毕！");
     }
 
     private void getData() {
@@ -181,6 +226,7 @@ public class CameraActivity extends BaseActivity implements SensorEventListener 
         cameraView.setOnTakeFinish(new CustomCameraView.OnTakeFinish() {
             @Override
             public void takeFinish(Bitmap bitmap) {
+
                 Map<String, String> map = DetectRectangles.findRectangles(CameraActivity.this, bitmap,
                         Integer.parseInt(etBlockSize.getText().toString()),
                         Double.parseDouble(etDelta.getText().toString()));
@@ -208,6 +254,8 @@ public class CameraActivity extends BaseActivity implements SensorEventListener 
         });
 
     }
+
+
 
 
     @Override

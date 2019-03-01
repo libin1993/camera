@@ -156,6 +156,7 @@ public class CustomCameraView extends FrameLayout implements SurfaceHolder.Callb
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         if (camera != null && holder != null) {
+            camera.setPreviewCallback(null);
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -458,7 +459,10 @@ public class CustomCameraView extends FrameLayout implements SurfaceHolder.Callb
             }, null, new PictureCallback() {
                 @Override
                 public void onPictureTaken(byte[] bytes, Camera camera) {
-                    camera.startPreview();// 开启预览
+                    if (camera != null) {
+                        camera.startPreview();// 开启预览
+                    }
+
                     BufferedOutputStream bos = null;
                     Bitmap bm = null;
 

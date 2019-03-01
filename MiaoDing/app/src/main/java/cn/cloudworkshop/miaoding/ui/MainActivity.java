@@ -37,6 +37,15 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfDouble;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.objdetect.HOGDescriptor;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +124,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         submitClientId();
 
     }
+
 
     /**
      * 加载底部栏icon

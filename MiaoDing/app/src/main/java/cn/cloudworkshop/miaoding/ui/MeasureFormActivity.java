@@ -129,7 +129,7 @@ public class MeasureFormActivity extends BaseActivity {
             }
         } else {
             isRequireCheck = true;
-            permissionUtils.showPermissionDialog("读写内存");
+            permissionUtils.showPermissionDialog("打开相机");
             isGrant = false;
         }
     }
